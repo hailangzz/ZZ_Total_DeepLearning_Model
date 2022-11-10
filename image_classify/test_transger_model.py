@@ -60,7 +60,7 @@ model_ft, input_size = initialize_model(model_name, 102, feature_extract, use_pr
 model_ft = model_ft.to(device)
 
 # 保存文件的名字
-filename = 'checkpoint.pth'
+filename = r'D:\PycharmProgram\total_model\checkpoint.pth'
 
 # 加载模型
 checkpoint = torch.load(filename)
@@ -93,7 +93,7 @@ def process_image(image_path):
     # 注意颜色通道放到第一个位置
     img = img.transpose((2, 0, 1))
 
-    return img
+    return torch.tensor(img)
 
 
 def imshow(image, ax=None, title=None):
@@ -171,10 +171,10 @@ fig = plt.figure(figsize=(20, 20))
 columns = 4
 rows = 2
 
-for idx in range (columns*rows):
-    ax = fig.add_subplot(rows, columns, idx+1, xticks=[], yticks=[])
-    plt.imshow(im_convert(images[idx]))
-    ax.set_title("{} ({})".format(cat_to_name[str(preds[idx])], cat_to_name[str(labels[idx].item())]),
-    color = ("green" if cat_to_name[str(preds[idx])] == cat_to_name[str(labels[idx].item())] else "red"))
-
-plt.show()
+# for idx in range (columns*rows):
+#     ax = fig.add_subplot(rows, columns, idx+1, xticks=[], yticks=[])
+#     plt.imshow(im_convert(images[idx]))
+#     ax.set_title("{} ({})".format(cat_to_name[str(preds[idx])], cat_to_name[str(labels[idx].item())]),
+#     color = ("green" if cat_to_name[str(preds[idx])] == cat_to_name[str(labels[idx].item())] else "red"))
+#
+# plt.show()

@@ -183,7 +183,7 @@ print(model_ft)
 
 # 优化器设置
 optimizer_ft = optim.Adam(params_to_update, lr=1e-2)
-scheduler = optim.lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)  # 学习率每7个epoch衰减为原来的0.1
+scheduler = optim.lr_scheduler.StepLR(optimizer_ft, step_size=3, gamma=0.1)  # 学习率每7个epoch衰减为原来的0.1
 # 最后一层LogSoftmax()了，所以不能nn.CrossEntropyLoss()来计算了，nn.CrossEntropyLoss()相当于logSoftmax()和nn.NLLLoss()整合
 criterion = nn.NLLLoss()
 
@@ -264,9 +264,11 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             if phase == 'train':
                 train_acc_history.append(epoch_acc)
                 train_losses.append(epoch_loss)
+                scheduler.step(epoch_loss)
 
-        print('Optimizer learning rate : {:.7f}'.format(optimizer.param_groups[0]['lr']))
-        LRs.append(optimizer.param_group[0]['lr'])
+        lr_train_values = optimizer.param_group[0]['lr']
+        print('Optimizer learning rate : {:.7f}'.format(lr_train_values))
+        LRs.append(lr_train_values)
         print()
 
     time_elapsed = time.time() - since
